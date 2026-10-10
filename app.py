@@ -17,16 +17,37 @@ st.set_page_config(
     page_icon="🎓"
 )
 
-# CSS bảo mật: Ẩn vĩnh viễn biểu tượng con mắt trên mọi trình duyệt và Streamlit
+# CSS bảo mật và làm sạch giao diện: Ẩn nút con mắt, ẩn thanh GitHub, Fork, Footer và Watermark
 st.markdown(
     """
     <style>
+    /* 1. Ẩn nút con mắt khi nhập mật khẩu */
     button[aria-label="Show password text"],
     button[aria-label="Hide password text"] {
         display: none !important;
     }
     input::-ms-reveal,
     input::-ms-clear {
+        display: none !important;
+    }
+
+    /* 2. Ẩn thanh header chứa nút Fork, biểu tượng GitHub và menu 3 chấm góc trên */
+    header[data-testid="stHeader"] {
+        display: none !important;
+    }
+
+    /* 3. Ẩn chân trang (Footer), watermark Streamlit và badge profile góc dưới */
+    footer {
+        display: none !important;
+    }
+    #MainMenu {
+        visibility: hidden !important;
+    }
+    [data-testid="stToolbar"] {
+        display: none !important;
+    }
+    .viewerBadge_container__1QSob,
+    [class*="viewerBadge_"] {
         display: none !important;
     }
     </style>
@@ -133,7 +154,7 @@ def set_cell_background(cell, fill_hex):
     shd.set(qn('w:fill'), fill_hex)
     tcPr.append(shd)
 
-# Hàm chuyển đổi Markdown sang tệp DOCX với định dạng bảng rộng nằm ngang
+# Hàm chuyển đổi Markdown sang tệp DOCX chuẩn với khổ ngang A4 và bảng ngay ngắn
 def create_docx(markdown_text, title):
     doc = Document()
     
